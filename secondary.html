@@ -1,0 +1,29 @@
+<!-- secondary.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secondary Window</title>
+</head>
+<body>
+    <h1>Secondary Window</h1>
+    <div id="itemDisplay">
+        <p>Select an item from the main window to view details here.</p>
+    </div>
+
+    <script>
+        const itemDisplay = document.getElementById('itemDisplay');
+
+        // Listen for incoming data and display it
+        window.electron.on('receive-data', (data) => {
+            console.log(data);
+            itemDisplay.innerHTML = `
+                <h2>${data.name}</h2>
+                <p>${data.description}</p>
+            `;
+        });
+    </script>
+</body>
+</html>

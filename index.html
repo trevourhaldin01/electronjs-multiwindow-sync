@@ -1,0 +1,44 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Window</title>
+</head>
+<body>
+    <h1>Main Window</h1>
+    <ul id="itemList"></ul>
+    <select id="selectList">
+        <option >Select an item</option>
+    </select>
+    <button onclick="sendSelectedItem()">Send Selected Item</button>
+
+    <script>
+       const items = [
+            { id: 1, name: 'Item One', description: 'This is the first item' },
+            { id: 2, name: 'Item Two', description: 'This is the second item' },
+            { id: 3, name: 'Item Three', description: 'This is the third item' },
+        ];
+        
+
+        const selectList = document.getElementById('selectList');
+        items.forEach(item => {
+            const selectItem = document.createElement('option');
+            selectItem.value = item.id;  // Set the value to item.id
+            selectItem.textContent = item.name;  // Set the visible text to item.name
+            selectList.appendChild(selectItem);  // Append directly without innerHTML
+        });
+
+        
+        // Function to send selected item data to secondary window
+        function sendSelectedItem() {
+            const selectedId = selectList.value;
+            if (selectedId) {
+                const selectedItem = items.find(item => item.id == selectedId);
+                window.electron.send('send-data', selectedItem);
+            }
+        }
+    </script>
+</body>
+</html>
